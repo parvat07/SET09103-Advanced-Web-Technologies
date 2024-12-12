@@ -9,12 +9,24 @@ header {
     background: #007bff;
     padding: 1rem;
     color: #fff;
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header nav ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+header nav ul li {
+    margin-right: 1rem; /* Space between links */
 }
 
 header nav a {
     color: #fff;
-    margin: 0 1rem;
     text-decoration: none;
 }
 
@@ -22,13 +34,54 @@ header nav a:hover {
     text-decoration: underline;
 }
 
-main .form-container {
-    max-width: 400px;
+.search-bar {
+    margin-bottom: 1rem; /* Adds a space to left of the search bar */
+}
+
+.search-bar input {
+    width: 200px; /* Set a fixed width for the search bar */
+    padding: 5px;
+    font-size: 14px;
+    height: 30px;
+    border-radius: 4px;
+}
+
+/* Styling for language dropdown */
+#language-select {
+    margin-left: 10px;
+    padding: 5px;
+}
+
+.task-actions {
+    margin-top: 20px; /* Adds a gap above the task actions */
+}
+
+
+.form-container {
+    max-width: 600px;
     margin: 2rem auto;
     padding: 2rem;
     background: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+}
+
+/* Make smaller title and date input fields */
+.form-control-sm {
+    width: 100%;        /* Full width */
+    padding: 0.5rem;    /* Smaller padding */
+    font-size: 0.9rem;   /* Smaller font */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Make textarea bigger for descriptions */
+textarea.form-control {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 .form-group {
@@ -70,7 +123,7 @@ footer {
     margin-top: 20px;
     padding: 10px;
     color: #777;
-    background-color: #333;
+    background-color: #f8f5f5;
 }
 
 

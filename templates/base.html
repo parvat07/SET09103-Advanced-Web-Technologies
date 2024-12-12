@@ -15,14 +15,10 @@
                 <li><a href="{{ url_for('logout') }}">Logout</a></li>
             </ul>
         </nav>
-        <div class="header-info">
-            <p id="date-time"></p>
-            <p id="weather"></p>
-            <select id="language-select">
-                <option value="en">English</option>
-                <option value="es">Spanish</option>
-                <!-- Add more languages as needed -->
-            </select>
+        <div class="search-bar">
+            <input type="text" id="search" placeholder="Search tasks...">
+        </div>
+    </header>
         </div>
     </header>
     <main>
@@ -33,7 +29,28 @@
         <div class="real-time-clock">
             <span id="time"></span>
         </div>
+        <div id="google_translate_element"></div>
+        <script>
+        function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+        }
+        </script>
+        <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    
         <p>&copy; 2024 To-Do App</p>
+
+        <h6>All rights reserved, Follow me through these links;</h6>
+        <div class="social-icons">
+        <a href="https://www.instagram.com/iamnotparvaaat/" target="_blank">
+        <img src="https://th.bing.com/th/id/OIP.JtmXSh_uyZBaTg1eXd-NtgAAAA?pid=ImgDet&rs=1" alt="Instagram" width="22" height="22"/>
+        </a>
+        <a href="https://www.facebook.com/parvat.bhusal" target="_blank">
+        <img src="https://pngimg.com/uploads/facebook_logos/facebook_logos_PNG19761.png" alt="Facebook" width="22" height="22"/>
+        </a>
+        <a href="https://uk.linkedin.com/in/parvat-bhusal-65b1a4258" target="_blank">
+        <img src="https://pngimg.com/uploads/linkedIn/linkedIn_PNG39.png" alt="LinkedIn" width="22" height="22"/>
+        </a>
+        </div>
     </footer>
 
     <script>
