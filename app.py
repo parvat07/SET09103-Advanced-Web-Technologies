@@ -1,90 +1,132 @@
-from flask import Flask, render_template, redirect, url_for, request, session, flash
+from flask import Flask, render_template, redirect, url_for, request, flash
 from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask_bcrypt import Bcrypt
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your_secret_key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///todo.db'
+app.config['SECRET_KEY'] = 'your_secret_key'
+
 db = SQLAlchemy(app)
+bcrypt = Bcrypt(app)
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
 
-# User model
-class User(db.Model):
+# Models
+class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(50), unique=True, nullable=False)
-    password = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(150), unique=True, nullable=False)
+    password = db.Column(db.String(150), nullable=False)
 
-# Task model
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(200), nullable=False)
-    completed = db.Column(db.Boolean, default=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    title = db.Column(db.String(150), nullable=False)
+    description = db.Column(db.Text, nullable=True)
+    due_date = db.Column(db.String(50), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-# Create database tables
-with app.app_context():
-    db.create_all()
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
+# Routes
 @app.route('/')
-def index():
-    if 'username' not in session:
-        return redirect(url_for('login'))  # Redirect to login if not logged in
-
-    # Retrieve the user from the database
-    user = User.query.filter_by(username=session['username']).first()
-    
-    if user is None:
-        return redirect(url_for('login'))  # Redirect if the user is not found
-
-    # Retrieve tasks for the logged-in user
-    tasks = Task.query.filter_by(user_id=user.id).all()
-    return render_template('index.html', tasks=tasks)
-
+def home():
+    return render_template('home.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form['username']
+        email = request.form['email']
         password = request.form['password']
-        user = User.query.filter_by(username=username).first()
-        if user and check_password_hash(user.password, password):
-            session['username'] = username
-            return redirect(url_for('index'))
-        flash('Invalid username or password')  # Flash message for invalid login
+        user = User.query.filter_by(email=email).first()
+        if user and bcrypt.check_password_hash(user.password, password):
+            login_user(user)
+            return redirect(url_for('dashboard'))
+        else:
+            flash('Invalid email or password')
     return render_template('login.html')
-
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        username = request.form['username']
-        password = generate_password_hash(request.form['password'])
-        new_user = User(username=username, password=password)
-        db.session.add(new_user)
+        email = request.form['email']
+        password = bcrypt.generate_password_hash(request.form['password']).decode('utf-8')
+
+        # Check if the email already exists
+        existing_user = User.query.filter_by(email=email).first()
+        if existing_user:
+            flash('Email already registered. Please log in or use a different email address.', 'danger')
+            return redirect(url_for('register'))
+
+        # If email doesn't exist, create the new user
+        user = User(email=email, password=password)
+        db.session.add(user)
         db.session.commit()
+
+        flash('Registration successful. Please log in.', 'success')
         return redirect(url_for('login'))
     return render_template('register.html')
 
+@app.route('/dashboard')
+@login_required
+def dashboard():
+    tasks = Task.query.filter_by(user_id=current_user.id).all()
+    return render_template('dashboard.html', tasks=tasks)
 
-@app.route('/add_task', methods=['POST'])
-def add_task():
-    if 'username' in session:
-        user = User.query.filter_by(username=session['username']).first()
-        content = request.form['content']
-        new_task = Task(content=content, user_id=user.id)
-        db.session.add(new_task)
+@app.route('/create_task', methods=['GET', 'POST'])
+@login_required
+def create_task():
+    if request.method == 'POST':
+        description = request.form['description']
+        due_date = request.form['due_date']
+        priority = request.form['priority']
+        task = Task(description=description, due_date=due_date, priority=priority, user_id=current_user.id)
+        db.session.add(task)
         db.session.commit()
-    return redirect(url_for('index'))
+        flash('Task created successfully!')
+        return redirect(url_for('dashboard'))
+    return render_template('create_task.html')
 
-@app.route('/delete_task/<int:task_id>')
+@app.route('/edit_task/<int:task_id>', methods=['GET', 'POST'])
+@login_required
+def edit_task(task_id):
+    task = Task.query.get_or_404(task_id)
+    if task.user_id != current_user.id:
+        flash('Unauthorized action.')
+        return redirect(url_for('dashboard'))
+    if request.method == 'POST':
+        task.title = request.form['title']
+        task.description = request.form['description']
+        task.due_date = request.form['due_date']
+        db.session.commit()
+        flash('Task updated successfully!')
+        return redirect(url_for('dashboard'))
+    return render_template('edit_task.html', task=task)
+
+@app.route('/delete_task/<int:task_id>', methods=['POST'])
+@login_required
 def delete_task(task_id):
-    task = Task.query.get(task_id)
+    task = Task.query.get_or_404(task_id)
+    if task.user_id != current_user.id:
+        flash('Unauthorized action.')
+        return redirect(url_for('dashboard'))
     db.session.delete(task)
     db.session.commit()
-    return redirect(url_for('index'))
+    flash('Task deleted successfully!')
+    return redirect(url_for('dashboard'))
+
+
+@app.route('/profile')
+@login_required
+def profile():
+
+    return render_template('profile.html', user=current_user)
 
 @app.route('/logout')
+@login_required
 def logout():
-    session.pop('username', None)
+    logout_user()
     return redirect(url_for('login'))
 
 if __name__ == '__main__':

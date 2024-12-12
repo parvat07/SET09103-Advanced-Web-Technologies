@@ -1,0 +1,28 @@
+<!-- home.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Welcome to Your To-Do App</h1>
+        <nav>
+            <a href="{{ url_for('login') }}">Login</a> | 
+            <a href="{{ url_for('register') }}">Register</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Start managing your tasks today!</h2>
+        <p>Please log in or create an account to begin.</p>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 To-Do App</p>
+    </footer>
+</body>
+</html>
