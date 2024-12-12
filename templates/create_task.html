@@ -1,17 +1,41 @@
 {% extends 'base.html' %}
-{% block title %}Create Task{% endblock %}
-{% block content %}
-<h2>Create a New Task</h2>
-<form method="POST" action="/create_task">
-    <input type="text" name="title" placeholder="Task Title">
-    <textarea name="description" placeholder="Task Description"></textarea>
-    <input type="date" name="due_date" required>
-    <select name="priority">
-        <option value="Low">Low</option>
-        <option value="Medium">Medium</option>
-        <option value="High">High</option>
-    </select>
-    <button type="submit">Create Task</button>
-</form>
 
+{% block title %}Create Task{% endblock %}
+
+{% block content %}
+<section class="form-container">
+    <h2 class="text-center">Create a New Task</h2>
+    <form method="POST" action="/create_task">
+        <div class="form-group">
+            <label for="title">Task Title:</label>
+            <input type="text" id="title" name="title" class="form-control" placeholder="Enter task title" required>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Task Description:</label>
+            <textarea id="description" name="description" class="form-control" placeholder="Enter task description"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="due_date">Due Date:</label>
+            <input type="date" id="due_date" name="due_date" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <label for="priority">Priority:</label>
+            <select id="priority" name="priority" class="form-control">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+        </div>
+
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary">Create Task</button>
+        </div>
+    </form>
+    <div class="text-center mt-3">
+        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Go Back to Dashboard</a>
+    </div>
+</section>
 {% endblock %}

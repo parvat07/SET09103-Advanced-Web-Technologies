@@ -130,7 +130,7 @@ def edit_task(task_id):
         db.session.commit()
         flash('Task updated successfully!')
         return redirect(url_for('dashboard'))
-    return render_template('edit_task.html', task=task)
+    return render_template('edit_task.html', task = task)
 
 @app.route('/delete_task/<int:task_id>', methods=['POST'])
 @login_required
@@ -154,7 +154,7 @@ def task_detail(task_id):
         flash('Unauthorized action.', 'danger')
         return redirect(url_for('dashboard'))
     
-    return render_template('task_detail.html', task=task)
+    return render_template('task_detail.html', task = task)
 
 @app.route('/profile')
 @login_required

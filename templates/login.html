@@ -3,21 +3,27 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<main>
-    <section class="form-container">
-        <h2>Login</h2>
-        <form method="POST" action="{{ url_for('login') }}">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Enter your email" required class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Enter your password" required class="form-control">
-            </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-        </form>
-        <p>Don't have an account? <a href="{{ url_for('register') }}">Register here</a>.</p>
-    </section>
-</main>
+<section class="form-container">
+    <h1> To Do List</h1>
+    <div class="info-paragraph">
+        <p>Welcome back! Please enter your email and password to access your tasks. If you're not registered yet, you can do it by clicking the "Register Here" link below.</p>
+        <p>Make sure to keep your login credentials safe to prevent unauthorized access to your task management system.</p>
+    </div>
+    <h2 class="text-center">Login</h2>
+    <form method="POST">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+    <p class="text-center">Don't have an account? <a href="{{ url_for('register') }}">Register here</a></p>
+
+</section>
 {% endblock %}

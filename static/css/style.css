@@ -6,7 +6,7 @@ body {
 }
 
 header {
-    background: #007bff;
+    background: #2b5384;
     padding: 1rem;
     color: #fff;
     display: flex;
@@ -71,8 +71,24 @@ header nav a:hover {
     width: 100%;        /* Full width */
     padding: 0.5rem;    /* Smaller padding */
     font-size: 0.9rem;   /* Smaller font */
-    border: 1px solid #ccc;
+    border: 1px solid #2b5384;
     border-radius: 4px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-justify {
+    text-align: justify;
+}
+
+.task-buttons {
+    margin-top: 20px;
+}
+
+.task-buttons .btn {
+    margin: 0 5px;
 }
 
 /* Make textarea bigger for descriptions */
@@ -80,7 +96,7 @@ textarea.form-control {
     width: 100%;
     padding: 0.8rem;
     font-size: 1rem;
-    border: 1px solid #ccc;
+    border: 1px solid #2b5384;
     border-radius: 4px;
 }
 
@@ -105,7 +121,7 @@ input {
 button.btn {
     width: 100%;
     padding: 0.8rem;
-    background-color: #007bff;
+    background-color: #2b5384;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -115,15 +131,15 @@ button.btn {
 }
 
 button.btn:hover {
-    background-color: #0056b3;
+    background-color: #2b5384;
 }
 
 footer {
     text-align: center;
     margin-top: 20px;
     padding: 10px;
-    color: #777;
-    background-color: #f8f5f5;
+    color: #fdfbfb;
+    background-color: #2b5384;
 }
 
 
@@ -136,7 +152,7 @@ nav ul li a.active {
 }
 
 a {
-    color: blue;
+    color: #2b5384;
     text-decoration: none;
 }
 
@@ -151,7 +167,7 @@ a:hover {
 
 .btn {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #2b5384;
     color: white;
     text-align: center;
     border-radius: 5px;
@@ -180,3 +196,18 @@ form button.btn-secondary {
     border-color: #6c757d !important;     /* Matching border color */
 }
 
+.form-group {
+    margin-bottom: 15px; /* Adds space between each form group */
+}
+
+.form-group label {
+    display: block; /* Ensures the label is on its own line */
+    margin-bottom: 5px; /* Adds space between the label and the input box */
+}
+
+.form-group input {
+    width: 100%; /* Ensures the input box takes up the full width of the container */
+    padding: 8px; /* Adds padding inside the input box */
+    border: 1px solid #ccc; /* Border around the input box */
+    border-radius: 4px; /* Rounded corners for the input box */
+}

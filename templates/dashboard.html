@@ -3,6 +3,7 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
+<section class="form-container">
 <div class="welcome-message">
     <h1 class="text-center">Welcome, {{ current_user.email }}!</h1>
     <h2 class="text-center">To Do List</h2>
@@ -110,4 +111,5 @@
         {% endfor %}
     </ul>
 </div>
+</section>
 {% endblock %}
