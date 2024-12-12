@@ -67,13 +67,12 @@ button.btn:hover {
 
 footer {
     text-align: center;
-    padding: 1rem;
-    background: #007bff;
-    color: #fff;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+    margin-top: 20px;
+    padding: 10px;
+    color: #777;
+    background-color: #333;
 }
+
 
 nav ul li a:hover {
     text-decoration: underline;
@@ -82,3 +81,49 @@ nav ul li a:hover {
 nav ul li a.active {
     font-weight: bold;
 }
+
+a {
+    color: blue;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.high-priority { background-color: #ff6666; }
+.medium-priority { background-color: #ffcc00; }
+.low-priority { background-color: #66cc66; }
+
+
+.btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+/* Consistent styling for both Edit and Delete buttons */
+form .btn {
+    padding: 10px 20px !important;   /* Ensuring consistent padding */
+    font-size: 14px !important;      /* Ensuring consistent font size */
+    display: inline-block !important; /* Keep the buttons inline */
+    line-height: 1.5 !important;     /* Prevent them from becoming too tall */
+    width: auto !important;          /* Allow buttons to adjust their width */
+    height: auto !important;         /* Prevent buttons from stretching */
+    text-align: center !important;   /* Ensure the text is centered */
+}
+
+/* Optional: Specific styling for the delete button (keeping it consistent with Edit) */
+form button.btn-danger {
+    background-color: #dc3545 !important; /* Red for the delete button */
+    border-color: #dc3545 !important;     /* Matching border color */
+}
+
+form button.btn-secondary {
+    background-color: #6c757d !important; /* Grey for the edit button */
+    border-color: #6c757d !important;     /* Matching border color */
+}
+

@@ -15,12 +15,43 @@
                 <li><a href="{{ url_for('logout') }}">Logout</a></li>
             </ul>
         </nav>
+        <div class="header-info">
+            <p id="date-time"></p>
+            <p id="weather"></p>
+            <select id="language-select">
+                <option value="en">English</option>
+                <option value="es">Spanish</option>
+                <!-- Add more languages as needed -->
+            </select>
+        </div>
     </header>
     <main>
         {% block content %}{% endblock %}
     </main>
+
     <footer>
+        <div class="real-time-clock">
+            <span id="time"></span>
+        </div>
         <p>&copy; 2024 To-Do App</p>
     </footer>
+
+    <script>
+        // Function to update the clock every second
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const timeString = `${hours}:${minutes}:${seconds}`;
+            document.getElementById("time").textContent = timeString;
+        }
+
+        // Update clock every 1 second
+        setInterval(updateClock, 1000);
+
+        // Initialize the clock immediately
+        updateClock();
+    </script>
 </body>
 </html>

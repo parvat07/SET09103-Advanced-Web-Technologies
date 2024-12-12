@@ -2,12 +2,10 @@
 {% block title %}Create Task{% endblock %}
 {% block content %}
 <h2>Create a New Task</h2>
-<form method="POST" action="{{ url_for('create_task') }}">
-    <label for="description">Task Description:</label>
-    <input type="text" name="description" required>
-    <label for="due_date">Due Date:</label>
-    <input type="text" name="due_date" placeholder="Due Date (YYYY-MM-DD)" pattern="\d{4}-\d{2}-\d{2}">
-    <label for="priority">Priority:</label>
+<form method="POST" action="/create_task">
+    <input type="text" name="title" placeholder="Task Title">
+    <textarea name="description" placeholder="Task Description"></textarea>
+    <input type="date" name="due_date" required>
     <select name="priority">
         <option value="Low">Low</option>
         <option value="Medium">Medium</option>
@@ -15,4 +13,5 @@
     </select>
     <button type="submit">Create Task</button>
 </form>
+
 {% endblock %}
